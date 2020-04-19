@@ -18,7 +18,8 @@
 		
 	$user = new User();
 	
-	modify($_POST, 'nonprofits');
+	modify($_POST, 'users');
+	
 	
     if(!($user->isAdmin('email'))){
 		echo 'You do not have admin privileges on this account, click here to return to the <a href="../index.php">index page</a>';
@@ -30,16 +31,11 @@
 	<form method="POST" action="<?php $_SERVER['PHP_SELF']?>">
 		<label for="drop">Select Field to Edit</label>
 		<select id="drop" name="drop">
-			<option value = "Name">Name</option>
-			<option value = "streetName">Street Name</option>
-			<option value = "state">State</option>
-			<option value = "city">City</option>
-			<option value = "zipCode">Zip Code</option>
-			<option value = "phone">Phone</option>
+			<option value = "firstName">First Name</option>
+			<option value = "lastName">Last Name</option>
 			<option value = "email">Email</option>
-			<option value = "founderFirstName">Founder's First Name</option>
-			<option value = "founderLastName">Founder's Last Name</option>
-			<option value = "missionStatement">Mission Statement</option>
+			<option value = "password">Password</option>
+			<option value = "userType">User Type</option>
 		</select><br>
 		<label for="id">Enter ID of Entry to Edit</label>
 		<input type="text" id="id" name="id"><br>

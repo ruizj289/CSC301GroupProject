@@ -1,4 +1,106 @@
 <?php
+
+
+function createDb($data){
+	$settings=[
+		'host'=>'localhost',
+		'db'=>'nonprofitlistingdb',
+		'user'=>'root',
+		'pass'=>''
+	];
+				
+	$opt=[
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+		PDO::ATTR_EMULATE_PREPARES => false,
+	];
+
+	$pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+
+	if(isset($data['streetName'])){
+        $query='INSERT INTO nonprofits (Name, streetName, state, city, zipCode, phone, email, founderFirstName, founderLastName, missionStatement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        $q=$pdo->prepare($query);
+        $q->execute([$data['Name'], $data['streetName'], $data['state'], $data['city'], $data['zipCode'], $data['phone'], $data['email'], $data['founderFirstName'], $data['founderLastName'], $data['missionStatement']]);
+	}
+	
+}
+
+function modify($data, $table){
+	$settings=[
+		'host'=>'localhost',
+		'db'=>'nonprofitlistingdb',
+		'user'=>'root',
+		'pass'=>''
+	];
+				
+	$opt=[
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+		PDO::ATTR_EMULATE_PREPARES => false,
+	];
+
+	$pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+
+	if(isset($data['edit'])){
+		if(strcmp($data['drop'],"password")==0){
+			$data['edit'] = trim($data['edit']);
+			$data['edit']= password_hash($data['edit'], PASSWORD_DEFAULT);
+		}
+		
+        $query='UPDATE '.$table.' SET '.$data['drop'].'="'.$data['edit'].'" WHERE id = "'.$data['id'].'"';
+        $q=$pdo->prepare($query);
+        $q->execute();
+		echo 'information successfully edited';
+	}
+
+}
+
+function createUser($data){
+    $settings=[
+        'host'=>'localhost',
+        'db'=>'nonprofitlistingdb',
+        'user'=>'root',
+        'pass'=>''
+    ];
+        
+    $opt=[
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
+        
+    $pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].
+    ';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+
+	if(isset($data['userType'])){
+		if(!filter_var($data['email2'], FILTER_VALIDATE_EMAIL)) return "The email that you entered is not valid";
+		$data['email2'] = strtolower($data['email2']);
+
+		$data['password'] = trim($data['password']);
+		if(strlen($data['password'])<8) return '<div class="alert alert-danger" role="alert">Password must be at least 8 characters long!</div>';
+
+		$query='SELECT id FROM users WHERE email=?';
+		$q=$pdo->prepare($query);
+		$q->execute([$data['email2']]);
+
+		if($q->rowCount()>0) return '<div class="alert alert-danger" role="alert">The email entered is already registered!</div>';
+
+		$data['password']=password_hash($data['password'], PASSWORD_DEFAULT);
+
+		$query='INSERT INTO users (firstName, lastName, email, password, userType) VALUES (?, ?, ?, ?, ?)';
+		$q=$pdo->prepare($query);
+		$q->execute([$data['firstName'], $data['lastName'], $data['email2'], $data['password'], $data['userType']]);
+
+		echo 'User registered';
+	}
+}
+
+function deleteUser($data){
+	
+	
+}
+
+
 class User{
     private $firstName;
     private $lastName;
@@ -106,6 +208,7 @@ class User{
         $q->execute([$this->email]);
 
         if($q->rowCount()>0) return '<div class="alert alert-danger" role="alert">The email entered is already regestered!</div>';
+
 
         $this->pwd=password_hash($this->pwd, PASSWORD_DEFAULT);
 

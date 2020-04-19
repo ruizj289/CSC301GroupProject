@@ -16,7 +16,7 @@
 	//connecting to database
 	$pdo = new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4',
 	$settings['user'],$settings['password'],$opt);	
-	$info=$pdo->query('SELECT * FROM nonprofits');
+	$info=$pdo->query('SELECT * FROM users');
 	
 	$user = new User();
 	if(!($user->isAdmin('email'))){
@@ -49,10 +49,10 @@
 		while($row=$info->fetch()){
 			echo '<div class="card" style="width: 18rem;">
 			<div class="card-body">
-			<h5 class="card-title">'.$row['Name'].'</h5>
-			<h6 class="card-subtitle mb-2 text-muted">'.$row['phone'].' '.$row['email'].'</h6>
-			<p class="card-text">'.$row['missionStatement'].'</p>
-			<a href="DeleteFinal.php?id='.$row['id'].'" class="card-link">More Details</a>
+			<h5 class="card-title">'.$row['firstName'].' '.$row['lastName'].'</h5>
+			<h6 class="card-subtitle mb-2 text-muted">'.$row['email'].'</h6>
+			<p class="card-text">'.$row['userType'].'</p>
+			<a href="DeleteUserFinal.php?id='.$row['id'].'" class="card-link">More Details</a>
 			</div>
 			</div>
 			<hr>';

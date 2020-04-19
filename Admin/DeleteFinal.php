@@ -1,6 +1,7 @@
 <?php
 	session_start();
-	require_once('../lib/auth_lib.php');
+	include_once('../lib/auth_lib.php');
+
 	$settings=[
 	'host'=>'localhost',
 	'db'=>'nonprofitlistingdb',
@@ -15,8 +16,9 @@
 	];
 	//connecting to database
 	$pdo = new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4',
-	$settings['user'],$settings['password'],$opt);	
-	$info=$pdo->query('SELECT * FROM nonprofits');
+	$settings['user'],$settings['password'],$opt);
+	$info=$pdo->query('SELECT * FROM nonprofits WHERE id='.$_GET['id']);
+	$row=$info->fetch();
 	
 	$user = new User();
 	if(!($user->isAdmin('email'))){
@@ -30,7 +32,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Non-Profit Connections</title>
+
+    <title><?= $row['Name']?></title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
 
@@ -46,18 +49,18 @@
 
       <div class="template">
 	  <?php
-		while($row=$info->fetch()){
-			echo '<div class="card" style="width: 18rem;">
-			<div class="card-body">
-			<h5 class="card-title">'.$row['Name'].'</h5>
-			<h6 class="card-subtitle mb-2 text-muted">'.$row['phone'].' '.$row['email'].'</h6>
-			<p class="card-text">'.$row['missionStatement'].'</p>
-			<a href="DeleteFinal.php?id='.$row['id'].'" class="card-link">More Details</a>
+		echo '<div>
+			<h3>'.$row['Name'].'</h3>
+			<h5>Contact Information</h5>
+			<p>'.$row['founderFirstName'].' '.$row['founderLastName'].'<br>
+			'.$row['email'].' ('.$row['phone'].') <br>
+			'.$row['streetName'].'  '.$row['city'].', '.$row['state'].'  '.$row['zipCode'].'<br>
+			</p>
+			<h5>Mission Statement</h5>
+			<p>'.$row['missionStatement'].'</p>
 			</div>
-			</div>
-			<hr>';
-		}
-	?>
+			<a href="DeleteFinalApproach2.php?id='.$_GET['id'].'" type="button">Delete</button>';
+		?>
       </div>
 
     </main><!-- /.container -->
