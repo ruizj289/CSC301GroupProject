@@ -1,5 +1,6 @@
 <?php
 
+
 function createDb($data){
 	$settings=[
 		'host'=>'localhost',
@@ -98,6 +99,7 @@ function deleteUser($data){
 	
 	
 }
+
 
 class User{
     private $firstName;
@@ -205,7 +207,8 @@ class User{
         $q=$pdo->prepare($query);
         $q->execute([$this->email]);
 
-        if($q->rowCount()>0) return '<div class="alert alert-danger" role="alert">The email entered is already registered!</div>';
+        if($q->rowCount()>0) return '<div class="alert alert-danger" role="alert">The email entered is already regestered!</div>';
+
 
         $this->pwd=password_hash($this->pwd, PASSWORD_DEFAULT);
 
