@@ -25,6 +25,7 @@
 
     <!-- Custom styles for this template -->
     <link href="../Styles/signin.css" rel="stylesheet">
+    <link rel="icon" href="https://garfieldparkacademy.org/wp-content/uploads/2018/04/hand_heart_donate_icon.png" type="image/icon type">
   </head>
 
   <body class="text-center">

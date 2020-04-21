@@ -33,4 +33,5 @@
 	$q=$pdo->query($query);
 	
 ?>
+<link rel="icon" href="https://garfieldparkacademy.org/wp-content/uploads/2018/04/hand_heart_donate_icon.png" type="image/icon type">
 <a href="AdminMain.php">Entry deleted, return to main</a>
