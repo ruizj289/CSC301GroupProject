@@ -34,6 +34,7 @@
 
     <!-- Custom styles for this template -->
     <link href="Styles/custom.css" rel="stylesheet">
+    <link rel="icon" href="https://garfieldparkacademy.org/wp-content/uploads/2018/04/hand_heart_donate_icon.png" type="image/icon type">
   </head>
 
   <body>
@@ -74,9 +75,15 @@
          
       </div>
     </nav>
-
+    <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Welcome to Non-Profit Connections</h1>
+    <p class="lead">We offer different Non-Profits, please click on more details to learn more about each of the Non-Profits. 
+      In order to donate to a Non-Profit, please either sign up or sign in to your account to make a contribution.</p>
+  </div>
+</div>
     <main role="main" class="container">
-
+    
       <div class="template">
 	  <?php
 		while($row=$info->fetch()){

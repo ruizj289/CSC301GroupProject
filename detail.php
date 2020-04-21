@@ -18,7 +18,9 @@
 	$pdo = new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4',
 	$settings['user'],$settings['password'],$opt);
 	$info=$pdo->query('SELECT * FROM nonprofits WHERE id='.$_GET['id']);
-	$row=$info->fetch();
+  $row=$info->fetch();
+  
+  $login_check = new User();
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,19 +38,33 @@
 
     <!-- Custom styles for this template -->
     <link href="Styles/custom.css" rel="stylesheet">
+    <link rel="icon" href="https://garfieldparkacademy.org/wp-content/uploads/2018/04/hand_heart_donate_icon.png" type="image/icon type">
   </head>
 
   <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="index.php">Non-Profit Connections</a>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Non-Profit Connections</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbars">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+		<?php
+			if($login_check->is_logged('email')){
+?>
+			 <li class="nav-item active">
+            <a class="nav-link" href="index.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="UserManagment/Signout.php">Sign Out</a>
+          </li>
+<?php
+			}
+			else{
+				?>
+				 <li class="nav-item active">
             <a class="nav-link" href="index.php">Home</a>
           </li>
           <li class="nav-item">
@@ -57,6 +73,10 @@
           <li class="nav-item">
             <a class="nav-link" href="UserManagment/SignUp.php">Sign Up</a>
           </li>
+<?php
+			}
+?>
+         
       </div>
     </nav>
 
