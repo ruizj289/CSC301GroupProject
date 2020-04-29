@@ -2,21 +2,10 @@
 
 
 function createDb($data){
-	$settings=[
-		'host'=>'localhost',
-		'db'=>'nonprofitlistingdb',
-		'user'=>'root',
-		'pass'=>''
-	];
-				
-	$opt=[
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-		PDO::ATTR_EMULATE_PREPARES => false,
-	];
+	require_once('../settings.php');
+        require_once('Db.php');
 
-	$pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
-
+        $pdo= DB::Connect(DB_SETTINGS);
 	if(isset($data['streetName'])){
         $query='INSERT INTO nonprofits (Name, streetName, state, city, zipCode, phone, email, founderFirstName, founderLastName, missionStatement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
         $q=$pdo->prepare($query);
@@ -26,21 +15,10 @@ function createDb($data){
 }
 
 function modify($data, $table){
-	$settings=[
-		'host'=>'localhost',
-		'db'=>'nonprofitlistingdb',
-		'user'=>'root',
-		'pass'=>''
-	];
-				
-	$opt=[
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-		PDO::ATTR_EMULATE_PREPARES => false,
-	];
+	require_once('../settings.php');
+        require_once('Db.php');
 
-	$pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
-
+        $pdo= DB::Connect(DB_SETTINGS);
 	if(isset($data['edit'])){
 		if(strcmp($data['drop'],"password")==0){
 			$data['edit'] = trim($data['edit']);
@@ -50,30 +28,19 @@ function modify($data, $table){
         $query='UPDATE '.$table.' SET '.$data['drop'].'="'.$data['edit'].'" WHERE id = "'.$data['id'].'"';
         $q=$pdo->prepare($query);
         $q->execute();
-		echo 'information successfully edited';
+		return '<div class="alert alert-success" role="alert">information successfully edited</div>';
 	}
-
+    return '';
 }
 
 function createUser($data){
-    $settings=[
-        'host'=>'localhost',
-        'db'=>'nonprofitlistingdb',
-        'user'=>'root',
-        'pass'=>''
-    ];
-        
-    $opt=[
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-    ];
-        
-    $pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].
-    ';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+    require_once('../settings.php');
+        require_once('Db.php');
+
+        $pdo= DB::Connect(DB_SETTINGS);
 
 	if(isset($data['userType'])){
-		if(!filter_var($data['email2'], FILTER_VALIDATE_EMAIL)) return "The email that you entered is not valid";
+		if(!filter_var($data['email2'], FILTER_VALIDATE_EMAIL)) return '<div class="alert alert-danger" role="alert">The email that you entered is not valid</div>';
 		$data['email2'] = strtolower($data['email2']);
 
 		$data['password'] = trim($data['password']);
@@ -91,13 +58,9 @@ function createUser($data){
 		$q=$pdo->prepare($query);
 		$q->execute([$data['firstName'], $data['lastName'], $data['email2'], $data['password'], $data['userType']]);
 
-		echo 'User registered';
-	}
-}
-
-function deleteUser($data){
-	
-	
+		return '<div class="alert alert-success" role="alert">User registered</div>';
+    }
+    return '';
 }
 
 
@@ -115,22 +78,10 @@ class User{
     }
 
     public function isAdmin($field_name){
-        $settings=[
-            'host'=>'localhost',
-            'db'=>'nonprofitlistingdb',
-            'user'=>'root',
-            'pass'=>''
-        ];
-        
-        $opt=[
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-        
-        $pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].
-        ';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+        require_once('../settings.php');
+        require_once('Db.php');
 
+        $pdo= DB::Connect(DB_SETTINGS);
         $user=$_SESSION[$field_name];
         $query='SELECT userType FROM users WHERE email=?';
         $q=$pdo->prepare($query);
@@ -146,21 +97,10 @@ class User{
 
 
     public function is_super_admin($field_name){
-        $settings=[
-            'host'=>'localhost',
-            'db'=>'nonprofitlistingdb',
-            'user'=>'root',
-            'pass'=>''
-        ];
-        
-        $opt=[
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-        
-        $pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].
-        ';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+        require_once('../settings.php');
+        require_once('Db.php');
+
+        $pdo= DB::Connect(DB_SETTINGS);
 
         $user=$_SESSION[$field_name];
         $query='SELECT userType FROM users WHERE email=?';
@@ -180,21 +120,10 @@ class User{
     }
 
     public function signup(){
-        $settings=[
-            'host'=>'localhost',
-            'db'=>'nonprofitlistingdb',
-            'user'=>'root',
-            'pass'=>''
-        ];
-        
-        $opt=[
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-        
-        $pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].
-        ';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+        require_once('../settings.php');
+        require_once('Db.php');
+
+        $pdo= DB::Connect(DB_SETTINGS);
 
 
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return "The email that you entered is not valid";
@@ -220,21 +149,10 @@ class User{
 		return '';
     }
     public function signin(){
-        $settings=[
-            'host'=>'localhost',
-            'db'=>'nonprofitlistingdb',
-            'user'=>'root',
-            'pass'=>''
-        ];
-        
-        $opt=[
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-        
-        $pdo= new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].
-        ';charset=utf8mb4', $settings['user'], $settings['pass'], $opt);
+        require_once('../settings.php');
+        require_once('Db.php');
+
+        $pdo= DB::Connect(DB_SETTINGS);
 
 
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) return "The email that you entered is not valid";

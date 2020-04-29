@@ -1,7 +1,8 @@
 <?php
 
-	session_start();
-	require_once('../lib/auth_lib.php');
+  session_start();
+  require_once('../settings.php');
+	require_once(APP_ROUTE.'/lib/auth_lib.php');
 	
 	$user = new User();
     if(!($user->isAdmin('email'))){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2020 at 06:12 PM
+-- Generation Time: Apr 30, 2020 at 12:52 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.26
 
@@ -36,6 +36,16 @@ CREATE TABLE `donation` (
   `dateOfTransaction` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `donation`
+--
+
+INSERT INTO `donation` (`id`, `userID`, `nonprofitID`, `amount`, `dateOfTransaction`) VALUES
+(1, 1, 1, 97.9, '2020-04-29'),
+(2, 1, 1, 97.9, '2020-04-29'),
+(3, 1, 1, 897.9, '2020-04-29'),
+(4, 1, 1, 89.89, '2020-04-29');
+
 -- --------------------------------------------------------
 
 --
@@ -56,6 +66,15 @@ CREATE TABLE `nonprofits` (
   `missionStatement` varchar(255) NOT NULL DEFAULT 'N/A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `nonprofits`
+--
+
+INSERT INTO `nonprofits` (`id`, `Name`, `streetName`, `state`, `city`, `zipCode`, `phone`, `email`, `founderFirstName`, `founderLastName`, `missionStatement`) VALUES
+(1, 'Feeding America', '35 East Wacker Drive, Suite 2000', 'IL', 'Chicago', '60601', '800-771-23', 'N/A', 'John', 'van Hengel', 'In a country that wastes billions of pounds of food each year, it\'s almost shocking that anyone in America goes hungry. Yet every day, there are millions of children and adults who do not get the meals they need to thrive. We work to get nourishing food –'),
+(2, 'USA Cares', '11760 Commonwealth Drive Suite 3', 'KY', 'Louisville', '40299 ', '2708724422', 'N/A', 'N/A', 'N/A', 'USA Cares exists to help bear the burdens of service by providing post-9/11 military families with financial and advocacy support in their time of need. Assistance is provided to all branches of service, all components, all ranks while protecting the priv'),
+(3, 'CMConnect', '802 Glenbarr Pl', 'KY', 'Louisville', '40243', ' 502536778', 'team@cmconnect.', 'N/A', 'N/A', 'CMConnect exists to connect, serve and advance under-resourced children\'s leaders around the world.');
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +89,13 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `userType` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`, `password`, `userType`) VALUES
+(1, 'Juan', 'Ruiz', 'juanr26690@gmail.com', '$2y$10$R38hjrrCztkF1FLkMw0Sz.wSeR/m1oFCU5sCtDvfnZEwaRyFtvw2.', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -104,19 +130,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `donation`
 --
 ALTER TABLE `donation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `nonprofits`
 --
 ALTER TABLE `nonprofits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
