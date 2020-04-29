@@ -1,22 +1,12 @@
 <?php
 
 	session_start();
-	require_once('../lib/auth_lib.php');
+	require_once('../settings.php');
+	require_once(APP_ROUTE.'/lib/auth_lib.php');
 	
-	$settings=[
-		'host'=>'localhost',
-		'db'=>'nonprofitlistingdb',
-		'user'=>'root',
-		'password'=>''
-	];
+	require_once(APP_ROUTE.'/lib/Db.php');
 
-	$opt=[
-	PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-	PDO::ATTR_EMULATE_PREPARES => false
-	];
-	$pdo = new PDO('mysql:host='.$settings['host'].';dbname='.$settings['db'].';charset=utf8mb4',$settings['user'],$settings['password'],$opt);
-		
+	$pdo=Db::Connect(DB_SETTINGS);
 	$user = new User();
 	
 	createDb($_POST);
@@ -34,7 +24,7 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Delete User</title>
+    <title>Create a Non-Profit</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
 
