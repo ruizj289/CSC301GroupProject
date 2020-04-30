@@ -80,12 +80,16 @@
 			<div class="card-body">
 			<h5 class="card-title">'.$row['Name'].'</h5>
 			<h6 class="card-subtitle mb-2 text-muted">'.$row['phone'].' '.$row['email'].'</h6>
-			<p class="card-text">'.$row['missionStatement'].'</p>
-			<a href="detail.php?id='.$row['id'].'" class="card-link">More Details</a>
-			<a href="donate.php?id='.$row['id'].'" class="card-link">Donate</a>
-			</div>
-			</div>
-			<hr>';
+      <p class="card-text">'.$row['missionStatement'].'</p>
+      <a href="detail.php?id='.$row['id'].'" class="card-link">More Details</a>';
+        if($login_check->is_logged('email')){
+          echo '
+            <a href="donate.php?id='.$row['id'].'" class="card-link">Donate</a>';
+        }
+        echo'
+			      </div>
+			      </div>
+			      <hr>';
 		}
 	?>
       </div>
