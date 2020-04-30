@@ -81,8 +81,11 @@
 			</p>
 			<h5>Mission Statement</h5>
 			<p>'.$row['missionStatement'].'</p>
-			</div>
-			<a href="donate.php?id='.$row['id'].'" class="btn btn-primary">Donate</a>';
+      </div>';
+      if($login_check->is_logged('email')){
+
+          echo '<a href="donate.php?id='.$row['id'].'" class="btn btn-primary">Donate</a>';
+      }
 		?>
       </div>
 
