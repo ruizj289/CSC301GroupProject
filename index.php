@@ -80,7 +80,7 @@
       <div class="card" style="width: 18rem;">
         <div class="card-body">
           <h5 class="card-title"><?=$row['Name'] ?></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><?= $row['phone'].' '.$row['email'] ?></h6>
+          <h6 class="card-subtitle mb-2 text-muted">Contact: <?= $row['phone'].($row['email']=="N/A"?" ":", ".$row['email']) ?></h6>
           <p class="card-text"><?= $row['missionStatement'] ?></p>
           <a href="detail.php?id='<?=$row['id']?>'" class="card-link">More Details</a>
           <?php 

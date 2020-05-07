@@ -24,7 +24,7 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Create a Non-Profit</title>
+    <title>Add a Non-Profit</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
 
@@ -56,7 +56,7 @@
 	<main role="main" class="container">
 
       <div class="template">
-	  <h1>Create a New Non-Profit</h1> 
+	  <h1>Add a New Non-Profit</h1> 
 	  <p>Please enter the fields to create the new Non-Profit</p>
 	  
 	<form method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
