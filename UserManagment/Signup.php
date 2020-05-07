@@ -1,10 +1,14 @@
 <?php
     session_start();
     require_once('../lib/auth_lib.php');
+    $error_msg = '';
+
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user = new User($_POST['inputEmail'], $_POST['inputPassword'], $_POST['inputFirstName'], $_POST['inputLastName']);
         $error= $user->signup();
-          if(isset($error{0})) echo $error;
+          if(isset($error{0})) {
+            $error_msg = $error;
+          }
     }
 ?>
 
@@ -31,6 +35,7 @@
   <body class="text-center">
     <form class="form-signin" method="POST" action="Signup.php">
       <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+      <div><?=$error_msg ?></div>
       <label for="inputFirstName" class="sr-only">First Name</label>
       <input type="text" name="inputFirstName" id="inputFirstName" class="form-control" placeholder="First Name" required autofocus>
       <br>
@@ -43,6 +48,10 @@
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <br>
+      <span>Already have an account? </span><a href="signin.php">Log in</a>
+      <br>
+      <a href="../index.php">Back to home</a>
       <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
     </form>
   </body>
